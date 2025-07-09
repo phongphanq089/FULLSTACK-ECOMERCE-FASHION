@@ -12,8 +12,8 @@ export async function categoryRoutes(fastify: FastifyInstance) {
       preValidation: zodValidate(CreateCategorySchema),
       schema: {
         body: toJsonSchema(CreateCategorySchema),
-        operationId: 'createProduct',
-        tags: ['Products'],
+        operationId: 'addCategory',
+        tags: ['Categories'],
         summary: 'Create new Product',
         description: 'Create new product in the system',
         response: {

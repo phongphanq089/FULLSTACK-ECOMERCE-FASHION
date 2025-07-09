@@ -3,13 +3,13 @@ import { createProductSchema } from './product.schema'
 import { zodValidate } from '@/middleware/zodValidate'
 import { toJsonSchema } from '@/utils/lib'
 import { withErrorHandling } from '@/utils/withErrorHandling'
-import { createProductController } from './product.controller'
+import {
+  createProductController,
+  getProductController,
+  getProductDetailController,
+} from './product.controller'
 
 export const productRoutes = (server: FastifyInstance) => {
-  server.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
-    const product = await server.prisma.product.findMany()
-    return reply.send(product)
-  })
   server.post(
     '/create-product',
     {
@@ -33,5 +33,41 @@ export const productRoutes = (server: FastifyInstance) => {
       },
     },
     withErrorHandling(createProductController)
-  )
+  ),
+    server.put(
+      '/products/:id',
+      {
+        preValidation: zodValidate(createProductSchema),
+        schema: {
+          body: toJsonSchema(createProductSchema),
+          operationId: 'updateProduct',
+          tags: ['Products'],
+          summary: 'update Product',
+        },
+      },
+      withErrorHandling(createProductController)
+    ),
+    server.get(
+      '/products',
+      {
+        schema: {
+          operationId: 'getProduct',
+          tags: ['getProduct'],
+          summary: 'get Product',
+        },
+      },
+
+      withErrorHandling(getProductController)
+    ),
+    server.get(
+      '/products/:id',
+      {
+        schema: {
+          operationId: 'getProductDetail',
+          tags: ['getProductDetail'],
+          summary: 'Get Product Detail',
+        },
+      },
+      withErrorHandling(getProductDetailController)
+    )
 }
