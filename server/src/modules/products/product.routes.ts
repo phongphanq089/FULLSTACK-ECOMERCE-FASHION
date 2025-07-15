@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance } from 'fastify'
 import { createProductSchema } from './product.schema'
 import { zodValidate } from '@/middleware/zodValidate'
 import { toJsonSchema } from '@/utils/lib'
@@ -8,6 +8,7 @@ import {
   getProductController,
   getProductDetailController,
 } from './product.controller'
+import { schemaDocsProduct } from '@/contents/schema-docs'
 
 export const productRoutes = (server: FastifyInstance) => {
   server.post(
@@ -16,20 +17,9 @@ export const productRoutes = (server: FastifyInstance) => {
       preValidation: zodValidate(createProductSchema),
       schema: {
         body: toJsonSchema(createProductSchema),
-        operationId: 'createProduct',
-        tags: ['Products'],
-        summary: 'Create new Product',
-        description: 'Create new product in the system',
-        response: {
-          201: {
-            type: 'object',
-            properties: {
-              id: { type: 'number' },
-              name: { type: 'string' },
-              description: { type: 'string' },
-            },
-          },
-        },
+        operationId: schemaDocsProduct.createProduct.operationId,
+        tags: schemaDocsProduct.createProduct.tags,
+        summary: schemaDocsProduct.createProduct.summary,
       },
     },
     withErrorHandling(createProductController)
@@ -40,9 +30,9 @@ export const productRoutes = (server: FastifyInstance) => {
         preValidation: zodValidate(createProductSchema),
         schema: {
           body: toJsonSchema(createProductSchema),
-          operationId: 'updateProduct',
-          tags: ['Products'],
-          summary: 'update Product',
+          operationId: schemaDocsProduct.updateProduct.operationId,
+          tags: schemaDocsProduct.updateProduct.tags,
+          summary: schemaDocsProduct.updateProduct.summary,
         },
       },
       withErrorHandling(createProductController)
@@ -51,9 +41,9 @@ export const productRoutes = (server: FastifyInstance) => {
       '/products',
       {
         schema: {
-          operationId: 'getProduct',
-          tags: ['getProduct'],
-          summary: 'get Product',
+          operationId: schemaDocsProduct.getProductAll.operationId,
+          tags: schemaDocsProduct.getProductAll.tags,
+          summary: schemaDocsProduct.getProductDetail.summary,
         },
       },
 
@@ -63,9 +53,9 @@ export const productRoutes = (server: FastifyInstance) => {
       '/products/:id',
       {
         schema: {
-          operationId: 'getProductDetail',
-          tags: ['getProductDetail'],
-          summary: 'Get Product Detail',
+          operationId: schemaDocsProduct.getProductDetail.operationId,
+          tags: schemaDocsProduct.getProductDetail.tags,
+          summary: schemaDocsProduct.getProductDetail.summary,
         },
       },
       withErrorHandling(getProductDetailController)

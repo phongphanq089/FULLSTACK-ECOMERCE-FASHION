@@ -1,5 +1,5 @@
 import { prisma } from '@/utils/lib'
-import { CreateCategoryInput } from './category.schema'
+import { CreateCategoryInput, UpdateCategoryInput } from './category.schema'
 
 export class CategoryService {
   static async create(data: CreateCategoryInput) {
@@ -7,7 +7,7 @@ export class CategoryService {
     const existing = await prisma.category.findUnique({
       where: { name: data.name },
     })
-    if (existing) throw new Error('Danh mục này đã tồn tại')
+    if (existing) throw new Error('This category already exists')
 
     return prisma.category.create({ data })
   }
@@ -16,5 +16,18 @@ export class CategoryService {
     return prisma.category.findMany({
       orderBy: { name: 'asc' },
     })
+  }
+  static async getCategoryDetail(id: number) {
+    return prisma.category.findUnique({
+      where: { id },
+    })
+  }
+  static async update(id: number, data: UpdateCategoryInput) {
+    const update = await prisma.category.update({
+      where: { id },
+      data,
+    })
+
+    return update
   }
 }

@@ -39,12 +39,6 @@ export const buildApp = () => {
           description: 'API documentation for the ecommerce website',
           version: '1.0.0',
         },
-        tags: [
-          {
-            name: 'Products',
-            description: 'Các thao tác với sản phẩm',
-          },
-        ],
       },
     })
   )
