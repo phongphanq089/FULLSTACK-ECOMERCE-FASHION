@@ -1,3 +1,4 @@
+import 'module-alias/register'
 import { buildApp } from './app'
 
 import { ENV_CONFIG } from './config/envConfig'
