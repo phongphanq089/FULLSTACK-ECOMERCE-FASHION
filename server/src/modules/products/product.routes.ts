@@ -5,6 +5,7 @@ import { toJsonSchema } from '@/utils/lib'
 import { withErrorHandling } from '@/utils/withErrorHandling'
 import {
   createProductController,
+  deleteProductController,
   getProductController,
   getProductDetailController,
 } from './product.controller'
@@ -43,7 +44,7 @@ export const productRoutes = (server: FastifyInstance) => {
         schema: {
           operationId: schemaDocsProduct.getProductAll.operationId,
           tags: schemaDocsProduct.getProductAll.tags,
-          summary: schemaDocsProduct.getProductDetail.summary,
+          summary: schemaDocsProduct.getProductAll.summary,
         },
       },
 
@@ -59,5 +60,16 @@ export const productRoutes = (server: FastifyInstance) => {
         },
       },
       withErrorHandling(getProductDetailController)
+    ),
+    server.delete(
+      '/products/:id',
+      {
+        schema: {
+          operationId: schemaDocsProduct.deleteProduct.operationId,
+          tags: schemaDocsProduct.deleteProduct.tags,
+          summary: schemaDocsProduct.deleteProduct.summary,
+        },
+      },
+      withErrorHandling(deleteProductController)
     )
 }

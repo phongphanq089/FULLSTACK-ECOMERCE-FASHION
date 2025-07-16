@@ -47,3 +47,14 @@ export const getCategoryDetailController = async (
 
   return sendResponse(reply, 'Get category  success', result)
 }
+
+export const deleteCategoryController = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const id = Number((request.params as { id: string }).id)
+
+  const result = await CategoryService.delete(id)
+
+  return sendResponse(reply, `Delete ${result} success`)
+}

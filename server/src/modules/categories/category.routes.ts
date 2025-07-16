@@ -2,6 +2,7 @@ import { withErrorHandling } from '@/utils/withErrorHandling'
 import { FastifyInstance } from 'fastify'
 import {
   createCategoryController,
+  deleteCategoryController,
   getCategoryController,
   getCategoryDetailController,
   updateCategoryController,
@@ -11,8 +12,8 @@ import { CreateCategorySchema } from './category.schema'
 import { toJsonSchema } from '@/utils/lib'
 import { schemaDocsCategories } from '@/contents/schema-docs'
 
-export async function categoryRoutes(fastify: FastifyInstance) {
-  fastify.post(
+export async function categoryRoutes(server: FastifyInstance) {
+  server.post(
     '/categories',
     {
       preValidation: zodValidate(CreateCategorySchema),
@@ -25,7 +26,7 @@ export async function categoryRoutes(fastify: FastifyInstance) {
     },
     withErrorHandling(createCategoryController)
   ),
-    fastify.get(
+    server.get(
       '/categories',
       {
         schema: {
@@ -36,7 +37,7 @@ export async function categoryRoutes(fastify: FastifyInstance) {
       },
       withErrorHandling(getCategoryController)
     ),
-    fastify.get(
+    server.get(
       '/categories/:id',
       {
         schema: {
@@ -47,7 +48,7 @@ export async function categoryRoutes(fastify: FastifyInstance) {
       },
       withErrorHandling(getCategoryDetailController)
     ),
-    fastify.put(
+    server.put(
       '/categories/:id',
       {
         schema: {
@@ -57,5 +58,16 @@ export async function categoryRoutes(fastify: FastifyInstance) {
         },
       },
       withErrorHandling(updateCategoryController)
+    ),
+    server.delete(
+      '/categories/:id',
+      {
+        schema: {
+          operationId: schemaDocsCategories.deleteCategory.operationId,
+          tags: schemaDocsCategories.deleteCategory.tags,
+          summary: schemaDocsCategories.deleteCategory.summary,
+        },
+      },
+      withErrorHandling(deleteCategoryController)
     )
 }
