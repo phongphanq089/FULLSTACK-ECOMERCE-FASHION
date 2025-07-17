@@ -1,5 +1,9 @@
 import { FastifyReply, FastifyRequest, RouteGenericInterface } from 'fastify'
-import { CreateProductInput } from './product.schema'
+import {
+  CreateProductInput,
+  FilterProductQueryInput,
+  ProductQuerySchemaInput,
+} from './product.schema'
 import { sendResponse } from '@/utils/response'
 import { ProductService } from './product.service'
 
@@ -32,7 +36,26 @@ export const getProductController = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const products = await ProductService.getProduct()
+  const query = request.query as ProductQuerySchemaInput
+  const products = await ProductService.getProductsWithPagination(query)
+  return sendResponse(reply, 'Get product success', products)
+}
+
+export const getFilterOptionsController = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const result = await ProductService.getFilterOptions()
+
+  return sendResponse(reply, 'Get filter option success', result)
+}
+
+export const getProductFilterController = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const query = request.query as FilterProductQueryInput
+  const products = await ProductService.filterProducts(query)
   return sendResponse(reply, 'Get product success', products)
 }
 

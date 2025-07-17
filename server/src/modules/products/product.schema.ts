@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const createProductSchema = z.object({
+  search: z.string().optional(),
   name: z
     .string({ required_error: 'Product name is required' })
     .min(1, 'Product name cannot be empty'),
@@ -49,6 +50,49 @@ export const createProductSchema = z.object({
       { invalid_type_error: 'Color list must be an array of numbers' }
     )
     .optional(),
+  orderBy: z
+    .enum(['createdAt', 'name', 'price'])
+    .optional()
+    .default('createdAt'),
+  sort: z.enum(['asc', 'desc']).optional().default('desc'),
+})
+
+export const getProductQuerySchema = z.object({
+  search: z.string().optional(),
+  page: z.coerce.number().min(1).default(1),
+  limit: z.coerce.number().min(1).max(100).default(10),
+  orderBy: z
+    .enum(['createdAt', 'name', 'price'])
+    .optional()
+    .default('createdAt'),
+  sort: z.enum(['asc', 'desc']).optional().default('desc'),
+})
+
+export const filterProductSchema = z.object({
+  search: z.string().optional(),
+  categoryId: z.coerce.number().optional(),
+  brandId: z.coerce.number().optional(),
+  sizeIds: z
+    .string()
+    .optional()
+    .transform((val) => (val ? val.split(',').map(Number) : undefined)),
+  colorIds: z
+    .string()
+    .optional()
+    .transform((val) => (val ? val.split(',').map(Number) : undefined)),
+  page: z.coerce.number().min(1).default(1),
+  limit: z.coerce.number().min(1).max(100).default(10),
+  orderBy: z
+    .enum(['createdAt', 'name', 'price'])
+    .optional()
+    .default('createdAt'),
+  sort: z.enum(['asc', 'desc']).optional().default('desc'),
+  minPrice: z.coerce.number().min(0).optional(),
+  maxPrice: z.coerce.number().min(0).optional(),
 })
 
 export type CreateProductInput = z.infer<typeof createProductSchema>
+
+export type ProductQuerySchemaInput = z.infer<typeof getProductQuerySchema>
+
+export type FilterProductQueryInput = z.infer<typeof filterProductSchema>

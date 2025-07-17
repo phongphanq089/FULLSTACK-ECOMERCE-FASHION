@@ -22,13 +22,25 @@ export function fixZodSchemaForFastify(schema: AnyObject): AnyObject {
       clone[key] = fixZodSchemaForFastify(clone[key])
     }
 
-    // ✅ Fix chính xác chỗ gây lỗi:
+    // ✅ Fix exclusiveMinimum:true
     if (key === 'exclusiveMinimum' && clone[key] === true) {
-      console.warn('🟡 Fixing invalid exclusiveMinimum:true → 0')
-      clone[key] = 0 // hoặc 1 tuỳ vào logic
+      console.warn('🟡 Fixing exclusiveMinimum:true → 0')
+      clone[key] = 0
+    }
+
+    // ✅ Fix enum dạng object → array
+    if (
+      key === 'enum' &&
+      typeof clone[key] === 'object' &&
+      !Array.isArray(clone[key])
+    ) {
+      const enumObj = clone[key]
+      const values = Object.values(enumObj)
+      console.warn('🟡 Fixing enum object → array:', values)
+      clone[key] = values
     }
   }
-  // ✅ Bắt buộc: required phải là array
+
   if (clone.type === 'object' && !Array.isArray(clone.required)) {
     clone.required = []
   }

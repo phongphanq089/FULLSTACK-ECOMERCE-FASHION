@@ -25,7 +25,7 @@ export class ColorService {
     return color.name
   }
   static async getAll() {
-    return prisma.category.findMany({
+    return prisma.color.findMany({
       orderBy: { name: 'asc' },
     })
   }

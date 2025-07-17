@@ -28,16 +28,7 @@
     "isolatedModules": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"],
-      "@config/*": ["./config/*"],
-      "@controllers/*": ["./controllers/*"],
-      "@modules/*": ["./modules/*"],
-      "@middleware/*": ["./middleware/*"],
-      "@models/*": ["./models/*"],
-      "@routes/*": ["./routes/*"],
-      "@services/*": ["./services/*"],
-      "@types/*": ["./types/*"],
-      "@utils/*": ["./utils/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["src/**/*"],

@@ -12,7 +12,7 @@ export const createColorController = async (
   reply: FastifyReply
 ) => {
   const result = await ColorService.create(request.body)
-  return sendResponse(reply, 'Add new category success', result)
+  return sendResponse(reply, 'Add new Color success', result)
 }
 
 interface UpdateColorInputRoute extends RouteGenericInterface {
@@ -25,7 +25,7 @@ export const updateColorController = async (
 ) => {
   const id = Number((request.params as { id: string }).id)
   const result = await ColorService.update(id, request.body)
-  return sendResponse(reply, `Update category ${result} success`, result)
+  return sendResponse(reply, `Update Color ${result} success`, result)
 }
 
 export const getColorController = async (
@@ -33,7 +33,7 @@ export const getColorController = async (
   reply: FastifyReply
 ) => {
   const result = await ColorService.getAll()
-  return sendResponse(reply, 'Get category success', result)
+  return sendResponse(reply, 'Get Color success ', result)
 }
 
 export const getColorDetailController = async (
@@ -42,7 +42,7 @@ export const getColorDetailController = async (
 ) => {
   const id = Number(request.params as { id: string })
   const result = await ColorService.getDetail(id)
-  return sendResponse(reply, 'Get category success', result)
+  return sendResponse(reply, 'Get Color success', result)
 }
 
 export const deleteColorController = async (
@@ -51,5 +51,5 @@ export const deleteColorController = async (
 ) => {
   const id = Number(request.params as { id: string })
   const result = await ColorService.getDetail(id)
-  return sendResponse(reply, `Get category ${result} success`, result)
+  return sendResponse(reply, `Get Color ${result} success`, result)
 }

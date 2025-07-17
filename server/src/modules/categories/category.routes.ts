@@ -8,7 +8,7 @@ import {
   updateCategoryController,
 } from './category.controller'
 import { zodValidate } from '@/middleware/zodValidate'
-import { CreateCategorySchema } from './category.schema'
+import { CreateCategorySchema, UpdateCategorySchema } from './category.schema'
 import { toJsonSchema } from '@/utils/lib'
 import { schemaDocsCategories } from '@/contents/schema-docs'
 
@@ -51,7 +51,9 @@ export async function categoryRoutes(server: FastifyInstance) {
     server.put(
       '/categories/:id',
       {
+        preValidation: zodValidate(UpdateCategorySchema),
         schema: {
+          body: toJsonSchema(UpdateCategorySchema),
           operationId: schemaDocsCategories.updateCategory.operationId,
           tags: schemaDocsCategories.updateCategory.tags,
           summary: schemaDocsCategories.updateCategory.summary,

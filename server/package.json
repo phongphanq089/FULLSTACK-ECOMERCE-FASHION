@@ -11,16 +11,7 @@
     "migrate:deploy": "npx prisma studio"
   },
   "_moduleAliases": {
-    "@": "dist",
-    "@config": "dist/config",
-    "@controllers": "dist/controllers",
-    "@modules": "dist/controllers",
-    "@middleware": "dist/modules",
-    "@models": "dist/models",
-    "@routes": "dist/routes",
-    "@services": "dist/services",
-    "@types": "dist/types",
-    "@utils": "dist/utils"
+    "@": "src"
   },
   "keywords": [],
   "author": "",

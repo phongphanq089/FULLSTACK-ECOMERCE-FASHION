@@ -4,6 +4,7 @@ export const schemaDocsProduct = {
     tags: ['Products'],
     summary: 'Create new Product',
   },
+
   updateProduct: {
     operationId: 'updateProduct',
     tags: ['Products'],
@@ -14,6 +15,16 @@ export const schemaDocsProduct = {
     tags: ['Products'],
     summary: 'Get Product All',
   },
+  getOptionFilter: {
+    operationId: 'getOptionFilter',
+    tags: ['Products'],
+    summary: 'Get opiton filter',
+  },
+  getProductFilter: {
+    operationId: 'getProductFilter',
+    tags: ['Products'],
+    summary: 'Get Product filter',
+  },
   getProductDetail: {
     operationId: 'getProductDetail',
     tags: ['Products'],
@@ -23,6 +34,34 @@ export const schemaDocsProduct = {
     operationId: 'deleteProduct',
     tags: ['Products'],
     summary: 'Delete Product',
+  },
+}
+
+export const schemaDocsProductImage = {
+  createProductImage: {
+    operationId: 'ProductImage',
+    tags: ['Products Image'],
+    summary: 'Create new Product image',
+  },
+  createProductImageBulk: {
+    operationId: 'ProductImageBulk',
+    tags: ['Products Image'],
+    summary: 'Create new Product image',
+  },
+  getProductImageByProduct: {
+    operationId: 'ProductImageByProduct',
+    tags: ['Products Image'],
+    summary: 'Get full list of images by product',
+  },
+  updateProductImageByProduct: {
+    operationId: 'UpdateProductImage',
+    tags: ['Products Image'],
+    summary: 'Update new Product image',
+  },
+  deleteProductImage: {
+    operationId: 'DeleteProductImage',
+    tags: ['Products Image'],
+    summary: 'Delete Product image',
   },
 }
 

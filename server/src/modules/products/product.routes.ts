@@ -6,8 +6,10 @@ import { withErrorHandling } from '@/utils/withErrorHandling'
 import {
   createProductController,
   deleteProductController,
+  getFilterOptionsController,
   getProductController,
   getProductDetailController,
+  getProductFilterController,
 } from './product.controller'
 import { schemaDocsProduct } from '@/contents/schema-docs'
 
@@ -49,6 +51,28 @@ export const productRoutes = (server: FastifyInstance) => {
       },
 
       withErrorHandling(getProductController)
+    ),
+    server.get(
+      '/products/filter-options',
+      {
+        schema: {
+          operationId: schemaDocsProduct.getOptionFilter.operationId,
+          tags: schemaDocsProduct.getOptionFilter.tags,
+          summary: schemaDocsProduct.getOptionFilter.summary,
+        },
+      },
+      withErrorHandling(getFilterOptionsController)
+    ),
+    server.get(
+      '/products/filter',
+      {
+        schema: {
+          operationId: schemaDocsProduct.getProductFilter.operationId,
+          tags: schemaDocsProduct.getProductFilter.tags,
+          summary: schemaDocsProduct.getProductFilter.summary,
+        },
+      },
+      withErrorHandling(getProductFilterController)
     ),
     server.get(
       '/products/:id',
