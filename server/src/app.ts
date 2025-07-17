@@ -8,6 +8,7 @@ import { registerRoutes } from './routes'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 import { withRefResolver } from 'fastify-zod'
+import { rbacSeeder } from './utils/rbacSeeder'
 
 export const buildApp = () => {
   const app = fastify({
@@ -51,6 +52,8 @@ export const buildApp = () => {
   })
 
   registerRoutes(app)
+
+  rbacSeeder(app)
 
   app.get('/', async (request, reply) => {
     return reply.send({
