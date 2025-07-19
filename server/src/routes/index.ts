@@ -1,6 +1,7 @@
 import { brandRoutes } from '@/modules/brands/brand.routes'
 import { categoryRoutes } from '@/modules/categories/category.routes'
 import { colorRoutes } from '@/modules/colors/color.routes'
+import { logsRoutes } from '@/modules/logs/logs.route'
 import { productImageRoutes } from '@/modules/product-image/productImage.routes'
 import { productVariantRoutes } from '@/modules/product-variant/productVariant.routes'
 import { productRoutes } from '@/modules/products/product.routes'
@@ -18,6 +19,7 @@ export const registerRoutes = (app: FastifyInstance) => {
       v1App.register(colorRoutes, { prefix: '' })
       v1App.register(sizeRoutes, { prefix: '' })
       v1App.register(productVariantRoutes, { prefix: '' })
+      v1App.register(logsRoutes, { prefix: '' })
     },
     { prefix: '/api/v1' }
   )

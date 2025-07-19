@@ -1,21 +1,37 @@
 import { ENV_CONFIG } from '@/config/envConfig'
 import winston from 'winston'
+import 'winston-daily-rotate-file'
+import path from 'path'
 import chalk from 'chalk'
 
-const logFormat = winston.format.combine(
-  winston.format.timestamp(),
-  winston.format.errors({ stack: true }),
-  winston.format.json()
-)
+const logDir = path.resolve('logs')
+
+const transportAll = new winston.transports.DailyRotateFile({
+  filename: path.join(logDir, 'combined-%DATE%.log'),
+  datePattern: 'YYYY-MM-DD',
+  zippedArchive: false,
+  maxSize: '5m',
+  maxFiles: '14d',
+  level: 'info',
+})
+
+const transportError = new winston.transports.DailyRotateFile({
+  filename: path.join(logDir, 'error-%DATE%.log'),
+  datePattern: 'YYYY-MM-DD',
+  zippedArchive: false,
+  maxSize: '5m',
+  maxFiles: '30d',
+  level: 'error',
+})
 
 export const logger = winston.createLogger({
-  level: ENV_CONFIG.isDevelopment ? 'debug' : 'info',
-  format: logFormat,
-  defaultMeta: { service: 'JWT-AUTHENTICATION-REACT-FASTIFY' },
-  transports: [
-    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'logs/combined.log' }),
-  ],
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
+  transports: [transportAll, transportError],
 })
 
 if (ENV_CONFIG.isDevelopment) {
