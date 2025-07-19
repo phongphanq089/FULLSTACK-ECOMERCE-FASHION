@@ -12,6 +12,7 @@ export function withErrorHandling<T extends RouteGenericInterface>(
     try {
       return await controller(request, reply)
     } catch (err) {
+      console.log(err, 'Error in controller')
       throw err
     }
   }

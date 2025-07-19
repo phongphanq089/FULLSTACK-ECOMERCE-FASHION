@@ -132,6 +132,11 @@ export class ProductService {
   }
   static async getProductsWithPagination(resBody: ProductQuerySchemaInput) {
     const { search, page = 1, limit = 10, orderBy, sort } = resBody
+
+    // Dùng để tìm các sản phẩm có name hoặc description chứa search.
+    // contains: tìm chuỗi con.
+    // mode: 'insensitive': không phân biệt chữ hoa/thường.
+    // Nếu không có search, sẽ không áp dụng điều kiện nào (trả về tất cả sản phẩm).
     const where: Prisma.ProductWhereInput = {
       AND: [
         search
@@ -150,8 +155,11 @@ export class ProductService {
         orderBy: {
           [orderBy]: sort,
         },
+        // skip: bỏ qua số sản phẩm của các trang trước → (page - 1) * limit
         skip: (page - 1) * limit,
+        // take: lấy limit sản phẩm cho trang hiện tại.
         take: limit,
+        //include: lấy thêm các quan hệ liên quan:
         include: {
           category: true,
           brand: true,
@@ -216,8 +224,17 @@ export class ProductService {
           : {},
         categoryId ? { categoryId } : {},
         brandId ? { brandId } : {},
+
+        // ** Lưu ý: Prisma sử dụng mệnh đề some để lọc quan hệ nhiều-nhiều và một-nhiều.
+        //Lọc nếu sản phẩm có ít nhất 1 size nằm trong danh sách.
         sizeIds?.length ? { sizes: { some: { id: { in: sizeIds } } } } : {},
         colorIds?.length ? { colors: { some: { id: { in: colorIds } } } } : {},
+        // Lọc sản phẩm có ít nhất 1 biến thể trong khoảng giá min-max.
+
+        // some: { ... } Lọc quan hệ (many-to-many / one-to-many) có ít nhất 1 phần tử khớp.
+        // price: { gte: minPrice, lte: maxPrice } Lọc giá trong khoảng.
+        // Nếu không có minPrice và maxPrice, sẽ không áp dụng điều kiện này.
+        // id: { in: [...] } Lọc các sản phẩm có id nằm trong mảng.
         minPrice !== undefined || maxPrice !== undefined
           ? {
               variants: {

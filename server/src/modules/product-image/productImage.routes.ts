@@ -1,6 +1,7 @@
 import { zodValidate } from '@/middleware/zodValidate'
 import { FastifyInstance } from 'fastify'
 import {
+  bulkCreateProductImageSchema,
   createProductImageSchema,
   updateProductImageSchema,
 } from './productImage.schema'
@@ -8,6 +9,7 @@ import { toJsonSchema } from '@/utils/lib'
 import { schemaDocsProductImage } from '@/contents/schema-docs'
 import { withErrorHandling } from '@/utils/withErrorHandling'
 import {
+  createBulkProductImageController,
   createProductImageController,
   deleteProductImageController,
   getImagesByProductIdController,
@@ -31,16 +33,16 @@ export const productImageRoutes = (server: FastifyInstance) => {
     server.post(
       '/create-productImage/bulk',
       {
-        preValidation: zodValidate(createProductImageSchema),
+        preValidation: zodValidate(bulkCreateProductImageSchema),
         schema: {
-          body: toJsonSchema(createProductImageSchema),
+          body: toJsonSchema(bulkCreateProductImageSchema),
           operationId:
             schemaDocsProductImage.createProductImageBulk.operationId,
           tags: schemaDocsProductImage.createProductImageBulk.tags,
           summary: schemaDocsProductImage.createProductImageBulk.summary,
         },
       },
-      withErrorHandling(createProductImageController)
+      withErrorHandling(createBulkProductImageController)
     ),
     server.get(
       '/products-image/:id/images',
