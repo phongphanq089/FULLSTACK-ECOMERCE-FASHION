@@ -13,6 +13,7 @@ node_modules
 # testing
 /coverage
 dist
+logs
 
 # next.js
 .next/
