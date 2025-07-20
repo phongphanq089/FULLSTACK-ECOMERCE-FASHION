@@ -6,6 +6,7 @@
 @theme {
   --color-primary-color: #ff3c00;
   --color-secondary-color: #fff4e2;
+  --color-three-color: #a3a3a3;
   --breakpoint-xs: 450px;
   --color-1: 0 100% 63%;
   --color-2: 270 100% 63%;
@@ -140,6 +141,16 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .container-full {
+    @apply mx-auto px-2 sm:px-6 lg:px-8;
+
+    .link {
+      @apply text-primary hover:underline;
+    }
   }
 }
 

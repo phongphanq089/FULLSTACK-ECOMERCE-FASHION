@@ -4,17 +4,17 @@ import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 
 import React, { useEffect, useRef, useState } from 'react'
+import Button from '~/components/ui/button'
 
-import { Button } from '~/components/ui/button'
 import { navigationLinks } from '~/setting/menu/root/menu'
 
 const MenuMobileNavbar = () => {
   return (
-    <div className='max-xl:flex px-3 py-1 min-h-[50px] hidden items-center justify-between z-30 fixed bottom-0 left-1/2 -translate-x-1/2 w-full bg-white/60 backdrop-blur-2xl rounded-2xl border'>
+    <div className='max-xl:flex px-3 py-1 min-h-[50px] hidden items-center justify-between z-100 fixed bottom-0 left-1/2 -translate-x-1/2 w-full bg-white/60 backdrop-blur-2xl rounded-2xl border'>
       <div className='flex justify-between gap-10 items-center w-full'>
-        <Button className='relative px-6 py-1 rounded-3xl bg-white hover:bg-primary-color/70 hover:text-white border-[1px] text-primary-color font-bold border-primary-color  flex items-center justify-start gap-5 min-w-[100px]'>
+        <Button className='relative px-6 py-1 rounded-3xl  text-primary-color font-bold border-primary-color  flex items-center justify-start gap-5 min-w-[100px]'>
           Cart{' '}
-          <span className='flex items-center justify-center bg-primary-color text-white p-1 px-3 rounded-4xl absolute right-1'>
+          <span className='flex items-center justify-center bg-white text-primary-color p-1 px-3 rounded-4xl absolute right-1'>
             5
           </span>
         </Button>

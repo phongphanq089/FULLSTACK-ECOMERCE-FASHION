@@ -1,6 +1,12 @@
+'use client'
 import React from 'react'
-import FormSubscribe from './elements/FormSubscribe'
+
 import BlockWorkShop from './elements/BlockWorkShop'
+import dynamic from 'next/dynamic'
+
+const FormSubscribe = dynamic(() => import('./elements/FormSubscribe'), {
+  ssr: false,
+})
 
 const Footer = () => {
   return (
