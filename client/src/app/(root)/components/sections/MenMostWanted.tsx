@@ -5,27 +5,23 @@ import CardProduct from '~/components/shared/CardProduct'
 const ImageCardDemo = [
   {
     image:
-      'https://ik.imagekit.io/htnacim0q/ecomerce-test/MOVILES_40_800x.webp?updatedAt=1752906748854',
+      'https://ik.imagekit.io/htnacim0q/ecomerce-test/ORIGINS_TEE_BLACK_back_8e4704e9-e509-490c-b690-d8873d842acf_800x.webp?updatedAt=1753001432549',
   },
   {
     image:
-      'https://ik.imagekit.io/htnacim0q/ecomerce-test/EDIT_IMG_7119_800x.webp?updatedAt=1752906748954',
+      'https://ik.imagekit.io/htnacim0q/ecomerce-test/MAKRO_LONGSLEEVE_TEE_white_3_800x.webp?updatedAt=1753001432636',
   },
   {
     image:
-      'https://ik.imagekit.io/htnacim0q/ecomerce-test/MOVILES_68_800x.webp?updatedAt=1752906749276',
+      'https://ik.imagekit.io/htnacim0q/ecomerce-test/ORIGINS_TEE_BLACK_front_ee30af42-524c-4937-8d1e-a1c63eb16607_800x.webp?updatedAt=1753001432627',
   },
   {
     image:
-      'https://ik.imagekit.io/htnacim0q/ecomerce-test/MANSION_TEE_WHITE_3_800x.webp?updatedAt=1752906749145',
+      'https://ik.imagekit.io/htnacim0q/ecomerce-test/ORIGINS_TEE_BLACK_front_ee30af42-524c-4937-8d1e-a1c63eb16607_800x.webp?updatedAt=1753001432627',
   },
   {
     image:
-      'https://ik.imagekit.io/htnacim0q/ecomerce-test/MANSION_TEE_WHITE_2_800x.webp?updatedAt=1752906749274',
-  },
-  {
-    image:
-      'https://ik.imagekit.io/htnacim0q/ecomerce-test/EDIT_IMG_7074_800x.webp?updatedAt=1752906748288',
+      'https://ik.imagekit.io/htnacim0q/ecomerce-test/MAKRO_LONGSLEEVE_TEE_white_3_800x.webp?updatedAt=1753001432636',
   },
 ]
 
@@ -59,10 +55,10 @@ const colorDemo = [
     name: 'Primary Color',
   },
 ]
-const NewArrivals = () => {
+const MenMostWanted = () => {
   return (
     <div>
-      <LayoutSectionGrid title='New Arrivals' link='/products'>
+      <LayoutSectionGrid title='Men Most Wanted' link='/products'>
         <CardProduct ImageCardDemo={ImageCardDemo} colorDemo={colorDemo} />
         <CardProduct ImageCardDemo={ImageCardDemo} colorDemo={colorDemo} />
         <CardProduct ImageCardDemo={ImageCardDemo} colorDemo={colorDemo} />
@@ -76,4 +72,4 @@ const NewArrivals = () => {
   )
 }
 
-export default NewArrivals
+export default MenMostWanted
