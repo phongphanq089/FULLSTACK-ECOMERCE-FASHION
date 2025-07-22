@@ -1,5 +1,5 @@
 'use client'
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ReactNode } from 'react'
 import { ChevronRight } from 'lucide-react'
 import {
