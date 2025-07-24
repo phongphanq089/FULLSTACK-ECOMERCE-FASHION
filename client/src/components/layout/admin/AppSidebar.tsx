@@ -12,6 +12,7 @@ import { NavGroup } from './NavGroup'
 import LogoUi from '~/components/shared/LogoUi'
 import { IconLogout2 } from '@tabler/icons-react'
 import Link from 'next/link'
+import { ScrollArea } from '~/components/ui/scroll-area'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -27,13 +28,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
-        {sidebarData.navGroups.map((props) => (
-          <NavGroup key={props.title} {...props} />
-        ))}
+        <ScrollArea className='h-full'>
+          {sidebarData.navGroups.map((props) => (
+            <NavGroup key={props.title} {...props} />
+          ))}
+        </ScrollArea>
       </SidebarContent>
 
       <SidebarFooter>
-        <SidebarMenuButton className='font-medium gap-3 h-9 rounded-md bg-gray-200 dark:bg-gray-800 hover:bg-transparent hover:from-sidebar-accent hover:to-sidebar-accent/40 data-[active=true]:from-primary/20 data-[active=true]:to-primary/5 [&>svg]:size-auto'>
+        <SidebarMenuButton className='font-medium gap-3 h-9 rounded-md bg-gray-200 dark:bg-accent hover:bg-transparent hover:from-sidebar-accent hover:to-sidebar-accent/40 data-[active=true]:from-primary/20 data-[active=true]:to-primary/5 [&>svg]:size-auto'>
           <IconLogout2
             className='text-muted-foreground/60 group-data-[active=true]/menu-button:text-primary'
             size={22}

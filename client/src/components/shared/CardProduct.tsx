@@ -23,7 +23,7 @@ interface CardProps {
 }
 const CardProduct = ({ colorDemo, ImageCardDemo }: CardProps) => {
   return (
-    <Card className='rounded-lg sm:rounded-2xl p-0 overflow-hidden gap-0 w-full'>
+    <Card className='rounded-lg sm:rounded-2xl p-0 overflow-hidden gap-0 w-full bg-white'>
       <CardContent className='p-0 relative'>
         <ImageProduct ImageCardDemo={ImageCardDemo} />
       </CardContent>
@@ -48,11 +48,13 @@ const CardProduct = ({ colorDemo, ImageCardDemo }: CardProps) => {
             )
           })}
         </div>
-        <CardTitle className='text-sm sm:text-lg'>
+        <CardTitle className='text-sm sm:text-lg text-black'>
           Mansion Tee Marshmallow
         </CardTitle>
         <CardDescription className='flex flex-col gap-2'>
-          <span className='text-xl sm:text-2xl font-bold'>1.676.000₫</span>
+          <span className='text-xl sm:text-2xl font-bold text-primary-color'>
+            1.676.000₫
+          </span>
 
           <span className='text-xs sm:text-lg text-gray-500'>
             Available Sizes: S, M, L, XL

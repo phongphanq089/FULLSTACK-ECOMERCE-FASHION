@@ -1,23 +1,18 @@
 import {
-  IconBarrierBlock,
+  IconBellDollar,
+  IconBorderAll,
+  IconBrandAdobe,
   IconBrowserCheck,
-  IconBug,
-  IconChecklist,
-  IconError404,
-  IconHelp,
   IconLayoutDashboard,
-  IconLock,
-  IconLockAccess,
-  IconMessages,
   IconNotification,
   IconPackages,
-  IconPalette,
-  IconServerOff,
+  IconRefreshDot,
   IconSettings,
-  IconTool,
+  IconShoppingBag,
+  IconTicket,
+  IconUser,
   IconUserCog,
-  IconUserOff,
-  IconUsers,
+  IconUserEdit,
 } from '@tabler/icons-react'
 import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react'
 
@@ -48,98 +43,129 @@ export const sidebarData: SidebarData = {
   ],
   navGroups: [
     {
-      title: 'General',
+      title: 'Admin',
       items: [
         {
           title: 'Dashboard',
-          url: '/',
+          url: '/admin',
           icon: IconLayoutDashboard,
         },
         {
-          title: 'Tasks',
-          url: '/tasks',
-          icon: IconChecklist,
+          title: 'Products',
+          icon: IconShoppingBag,
+          items: [
+            {
+              title: 'Product List',
+              url: '/admin/products',
+            },
+            {
+              title: 'Create Product',
+              url: '/admin/products/create',
+            },
+            {
+              title: 'Product Reviews',
+              url: '/admin/products/reviews',
+            },
+          ],
         },
         {
-          title: 'Apps',
-          url: '/apps',
+          title: 'Categories',
           icon: IconPackages,
+          items: [
+            {
+              title: 'Category List',
+              url: '/admin/category',
+            },
+            {
+              title: 'Create Category',
+              url: '/admin/category/create',
+            },
+          ],
         },
         {
-          title: 'Chats',
-          url: '/chats',
+          title: 'Brands',
+          icon: IconBrandAdobe,
+          items: [
+            {
+              title: 'Brands List',
+              url: '/admin/brands',
+            },
+            {
+              title: 'Create Brands',
+              url: '/admin/brands/create',
+            },
+          ],
+        },
+        {
+          title: 'Orders',
+          icon: IconBorderAll,
+          items: [
+            {
+              title: 'Brands List',
+              url: '/admin/brands',
+            },
+            {
+              title: 'Create Brands',
+              url: '/admin/brands/create',
+            },
+          ],
+        },
+        {
+          title: 'Custommers',
+          url: '/customer',
           badge: '3',
-          icon: IconMessages,
+          icon: IconUser,
         },
         {
-          title: 'Users',
-          url: '/users',
-          icon: IconUsers,
+          title: 'Refunds',
+
+          icon: IconRefreshDot,
+          items: [
+            {
+              title: 'Refund request',
+              url: '/admin/refund-request',
+            },
+            {
+              title: 'Refund setting',
+              url: '/admin/refund-setting',
+            },
+          ],
         },
       ],
     },
     {
-      title: 'Pages',
+      title: 'Vendor',
       items: [
         {
-          title: 'Auth',
-          icon: IconLockAccess,
+          title: 'Earnings',
+          icon: IconBellDollar,
           items: [
             {
-              title: 'Sign In',
-              url: '/sign-in',
+              title: 'Earning History',
+              url: '/admin/eearning-history',
             },
             {
-              title: 'Sign In (2 Col)',
-              url: '/sign-in-2',
+              title: 'Payouts',
+              url: '/admin/payouts',
             },
             {
-              title: 'Sign Up',
-              url: '/sign-up',
+              title: 'Payout Requests',
+              url: '/admin/payout-requests',
             },
             {
               title: 'Forgot Password',
               url: '/forgot-password',
             },
-            {
-              title: 'OTP',
-              url: '/otp',
-            },
           ],
         },
         {
-          title: 'Errors',
-          icon: IconBug,
-          items: [
-            {
-              title: 'Unauthorized',
-              url: '/401',
-              icon: IconLock,
-            },
-            {
-              title: 'Forbidden',
-              url: '/403',
-              icon: IconUserOff,
-            },
-            {
-              title: 'Not Found',
-              url: '/404',
-              icon: IconError404,
-            },
-            {
-              title: 'Internal Server Error',
-              url: '/500',
-              icon: IconServerOff,
-            },
-            {
-              title: 'Maintenance Error',
-              url: '/503',
-              icon: IconBarrierBlock,
-            },
-          ],
+          title: 'Support Tickets',
+          url: '/admin/support-tickets',
+          icon: IconTicket,
         },
       ],
     },
+
     {
       title: 'Other',
       items: [
@@ -153,31 +179,26 @@ export const sidebarData: SidebarData = {
               icon: IconUserCog,
             },
             {
-              title: 'Account',
-              url: '/settings/account',
-              icon: IconTool,
+              title: 'Account Setting',
+              url: '/admin/aacount-setting',
+              icon: IconUserEdit,
             },
             {
-              title: 'Appearance',
-              url: '/settings/appearance',
-              icon: IconPalette,
+              title: 'Shop Settings',
+              url: '/admin/shop-settings',
+              icon: IconSettings,
             },
             {
               title: 'Notifications',
-              url: '/settings/notifications',
+              url: '/admin/shop-settings',
               icon: IconNotification,
             },
             {
               title: 'Display',
-              url: '/settings/display',
+              url: '/admin/shop-settings',
               icon: IconBrowserCheck,
             },
           ],
-        },
-        {
-          title: 'Help Center',
-          url: '/help-center',
-          icon: IconHelp,
         },
       ],
     },
