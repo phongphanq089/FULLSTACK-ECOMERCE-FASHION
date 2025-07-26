@@ -137,3 +137,6 @@
 {"level":"info","message":"🛑 SIGINT received. Exiting...","service":"JWT-AUTHENTICATION-REACT-FASTIFY","timestamp":"2025-07-17T06:24:28.133Z"}
 {"level":"info","message":"🛑 SIGINT received. Exiting...","service":"JWT-AUTHENTICATION-REACT-FASTIFY","timestamp":"2025-07-17T13:25:12.537Z"}
 {"level":"info","message":"🛑 SIGINT received. Exiting...","service":"JWT-AUTHENTICATION-REACT-FASTIFY","timestamp":"2025-07-19T02:48:59.572Z"}
+{"level":"info","message":"🛑 SIGINT received. Exiting...","service":"JWT-AUTHENTICATION-REACT-FASTIFY","timestamp":"2025-07-26T11:16:11.466Z"}
+{"level":"info","message":"🛑 SIGINT received. Exiting...","service":"JWT-AUTHENTICATION-REACT-FASTIFY","timestamp":"2025-07-26T11:23:26.949Z"}
+{"address":"127.0.0.1","code":"EADDRINUSE","errno":-4091,"level":"error","message":"❌ Error starting server: listen EADDRINUSE: address already in use 127.0.0.1:3000","port":3000,"service":"JWT-AUTHENTICATION-REACT-FASTIFY","stack":"Error: listen EADDRINUSE: address already in use 127.0.0.1:3000\n    at Server.setupListenHandle [as _listen2] (node:net:1912:16)\n    at listenInCluster (node:net:1969:12)\n    at node:net:2178:7\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)","syscall":"listen","timestamp":"2025-07-26T14:10:11.368Z"}

@@ -63,6 +63,15 @@ export const sidebarData: SidebarData = {
               url: '/admin/products/create',
             },
             {
+              title: 'Product Varial',
+              url: '/admin/products/product-Varial',
+            },
+            {
+              title: 'Create Product Varial',
+              url: '/admin/products/add-product-Varial',
+            },
+
+            {
               title: 'Product Reviews',
               url: '/admin/products/reviews',
             },
@@ -165,7 +174,6 @@ export const sidebarData: SidebarData = {
         },
       ],
     },
-
     {
       title: 'Other',
       items: [
@@ -199,6 +207,16 @@ export const sidebarData: SidebarData = {
               icon: IconBrowserCheck,
             },
           ],
+        },
+      ],
+    },
+    {
+      title: 'security',
+      items: [
+        {
+          title: 'Logs',
+          icon: IconSettings,
+          url: '/admin/logs',
         },
       ],
     },

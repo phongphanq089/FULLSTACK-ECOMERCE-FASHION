@@ -2,6 +2,8 @@ import zodToJsonSchema from 'zod-to-json-schema'
 
 import { PrismaClient } from '@prisma/client'
 
+import slugifyLib from 'slugify'
+
 export const prisma = new PrismaClient()
 
 // helpers/fixZodSchemaForFastify.ts
@@ -55,4 +57,8 @@ export function toJsonSchema(zodSchema: any) {
       $refStrategy: 'none',
     })
   )
+}
+
+export function slugify(name: string): string {
+  return slugifyLib(name, { lower: true, strict: true })
 }

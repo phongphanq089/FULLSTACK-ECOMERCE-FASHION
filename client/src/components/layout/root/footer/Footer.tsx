@@ -15,7 +15,7 @@ const Footer = () => {
         <FormSubscribe />
       </div>
 
-      <div className='sticky z-0 bottom-0 left-0 w-full py-10 h-fit lg:h-[400px] 2xl:h-[600px] bg-white flex justify-center items-center px-3 md:px-10 max-lg:mb-5 max-2xl:mb-[80px]'>
+      <div className='sticky z-0 bottom-0 left-0 w-full py-10 h-fit lg:h-[400px] 2xl:h-[600px] bg-white flex justify-center items-center px-3 md:px-10 max-lg:mb-5 max-2xl:mb-[80px] border-t-[3px]'>
         <div className='relative overflow-hidden w-full h-full flex flex-col  justify-end text-right text-primary-color'>
           <div className='lg:grid grid-cols-2'>
             <div className='flex flex-row space-x-12 sm:pace-x-16  md:space-x-24 text-lg md:text-xl'>

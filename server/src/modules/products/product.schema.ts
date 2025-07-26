@@ -5,7 +5,6 @@ export const createProductSchema = z.object({
   name: z
     .string({ required_error: 'Product name is required' })
     .min(1, 'Product name cannot be empty'),
-
   description: z
     .string({ required_error: 'Product description is required' })
     .min(1, 'Product description cannot be empty'),

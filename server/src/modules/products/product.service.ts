@@ -6,6 +6,7 @@ import {
 } from './product.schema'
 import { Prisma } from '@prisma/client'
 import { AppError } from '@/utils/errors'
+import slugify from 'slugify'
 
 export class ProductService {
   static async addNewProduct(resBody: CreateProductInput) {
@@ -26,6 +27,7 @@ export class ProductService {
       description,
       imageUrl,
       weight: weight ?? null,
+      slug: slugify(name),
     }
 
     if (categoryId) {
@@ -85,6 +87,7 @@ export class ProductService {
       description,
       imageUrl,
       weight: weight ?? null,
+      slug: slugify(name),
     }
 
     if (categoryId) {

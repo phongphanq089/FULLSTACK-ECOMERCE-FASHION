@@ -21,7 +21,7 @@ const buttonVariants = cva(
           'bg-gray-700 text-white border-2 border-black shadow-[4px_4px_0px_0px_#0a0a0a] hover:shadow-none hover:translate-x-1 hover:translate-y-1 disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_0px_#0a0a0a]',
         // An outline button that fills with the custom color on hover
         outline:
-          'bg-transparent text-primary-color border-2 border-primary-color shadow-[4px_4px_0px_0px_#0a0a0a] hover:shadow-none hover:translate-x-1 hover:translate-y-1 hover:bg-primary-color hover:text-white disabled:hover:bg-transparent disabled:hover:text-primary-color disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_0px_#0a0a0a]',
+          'bg-transparent border text-primary-color border-2 border-primary-color shadow-[4px_4px_0px_0px_#0a0a0a] hover:shadow-none hover:translate-x-1 hover:translate-y-1 hover:bg-primary-color hover:text-white disabled:hover:bg-transparent disabled:hover:text-primary-color disabled:hover:translate-x-0 disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_0px_#0a0a0a]',
         // A simple link-style button
         link: 'bg-transparent text-primary-color hover:underline',
       },
