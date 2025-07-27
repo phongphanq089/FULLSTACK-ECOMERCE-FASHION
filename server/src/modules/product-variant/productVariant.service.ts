@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/lib'
+import { generateSKU, prisma } from '@/utils/lib'
 import { CreateVariantInput, UpdateVariantInput } from './productVariant.schema'
 import { AppError } from '@/utils/errors'
 

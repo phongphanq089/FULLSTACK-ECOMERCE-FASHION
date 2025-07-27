@@ -62,3 +62,11 @@ export function toJsonSchema(zodSchema: any) {
 export function slugify(name: string): string {
   return slugifyLib(name, { lower: true, strict: true })
 }
+
+export function generateSKU(
+  productId: number,
+  colorId: number,
+  sizeId: number
+): string {
+  return `SKU-${productId}-${colorId}-${sizeId}`
+}

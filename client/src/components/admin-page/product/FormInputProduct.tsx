@@ -1,29 +1,33 @@
-'use client'
-
 import React from 'react'
-import { Input } from '~/components/ui/input'
-import CategorySelect from './CategorySelect'
-import UploadImage from './UploadImage'
-import BrandSelect from './BrandSelect'
-import SizeSelect from './SizeSelect'
-import ColorSelect from './ColorSelect'
+
+import InfomationProduct from './InfomationProduct'
+import FormInputPricePolicy from './FormInputPricePolicy'
+import ProductOption from './ProductOption'
+import InventoryForm from './InventoryForm'
+import MediaUploadForm from './MediaUploadForm'
+import FormCategory from './FormCategory'
+import FormCollection from './FormCollection'
+import Button from '~/components/ui/button'
 
 const FormInputProduct = () => {
   return (
-    <div className='py-5 max-w-4xl mx-auto'>
-      <div className='grid grid-cols-2 gap-3'>
-        <Input type='text' placeholder='Name Product...' />
-        <CategorySelect />
+    <div className='py-5'>
+      <div className='lg:grid grid-cols-12 gap-5'>
+        <div className='col-span-8'>
+          <MediaUploadForm />
+          <InfomationProduct />
+          <FormInputPricePolicy />
+          <ProductOption />
+          <InventoryForm />
+        </div>
+        <div className='col-span-4'>
+          <FormCategory />
+          <FormCollection />
+        </div>
       </div>
-      <div className='my-10 '>
-        <UploadImage />
-      </div>
-      <div className='grid grid-cols-2 gap-3'>
-        <BrandSelect />
-        <SizeSelect />
-      </div>
-      <div className='pt-10'>
-        <ColorSelect />
+      <div className='flex items-center justify-end gap-3 mt-10'>
+        <Button variant={'outline'}>CANCLE</Button>
+        <Button>SAVE</Button>
       </div>
     </div>
   )

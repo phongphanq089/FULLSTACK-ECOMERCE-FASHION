@@ -3,6 +3,7 @@ import {
   IconBorderAll,
   IconBrandAdobe,
   IconBrowserCheck,
+  IconCategory,
   IconLayoutDashboard,
   IconNotification,
   IconPackages,
@@ -62,20 +63,12 @@ export const sidebarData: SidebarData = {
               title: 'Create Product',
               url: '/admin/products/create',
             },
-            {
-              title: 'Product Varial',
-              url: '/admin/products/product-Varial',
-            },
-            {
-              title: 'Create Product Varial',
-              url: '/admin/products/add-product-Varial',
-            },
-
-            {
-              title: 'Product Reviews',
-              url: '/admin/products/reviews',
-            },
           ],
+        },
+        {
+          title: 'Colections',
+          url: '/colections',
+          icon: IconCategory,
         },
         {
           title: 'Categories',

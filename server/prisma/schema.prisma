@@ -103,6 +103,7 @@ model Product {
   id          Int              @id @default(autoincrement())
   slug        String     @unique
   name        String
+  smallStrip  String
   description String
   imageUrl    String
   weight      Float?
@@ -110,6 +111,7 @@ model Product {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   categoryId  Int?
+  infoSections ProductInfoSection[]
   collections Collection[] @relation("ProductToCollection")
   category    Category?        @relation(fields: [categoryId], references: [id])
   brandId     Int?
@@ -126,10 +128,26 @@ model Product {
   @@index([isActive])
 }
 
+model ProductInfoSection {
+  id        Int      @id @default(autoincrement())
+  title     String   // Ví dụ: "Shipping & Returns", "Size Guide"
+  content   String   // Nội dung chi tiết
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sortOrder Int      @default(0) // Dễ sắp xếp theo thứ tự hiển thị
+
+  @@index([productId])
+}
+
 model ProductVariant {
   id         Int         @id @default(autoincrement())
   sku        String      @unique
-  price      Float
+  price            Float       // Giá bán cuối
+  originalPrice    Float?      // Giá gốc (niêm yết)
+  discountPercent  Float?      // % giảm giá
+  costPrice        Float?      // Giá vốn
+  profit           Float?      // Lợi nhuận (tính toán)
+  profitMargin     Float?      // Biên lợi nhuận %
   stock      Int
   isActive   Boolean     @default(true)
   productId  Int
