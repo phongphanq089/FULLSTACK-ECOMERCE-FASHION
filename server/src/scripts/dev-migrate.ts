@@ -33,17 +33,17 @@ function autoMigrate() {
   if (hasSchemaChanged()) {
     const name = `auto_${getTimestamp()}`
     console.log(`🛠  Schema changed. Running migration: ${name}`)
-
-    try {
-      execSync(`npx prisma migrate dev --name ${name}`, { stdio: 'inherit' })
-    } catch (error) {
-      if (process.env.NODE_ENV !== 'development') {
-        console.log('❌ Not in dev mode. Skip reset.')
-        return
-      }
-      console.error('❗ Migration failed. Trying to reset DB...')
-      execSync(`npx prisma migrate reset --force`, { stdio: 'inherit' })
-    }
+    execSync(`npx prisma migrate dev --name ${name}`, { stdio: 'inherit' })
+    // try {
+    //   execSync(`npx prisma migrate dev --name ${name}`, { stdio: 'inherit' })
+    // } catch (error) {
+    //   if (process.env.NODE_ENV !== 'development') {
+    //     console.log('❌ Not in dev mode. Skip reset.')
+    //     return
+    //   }
+    //   console.error('❗ Migration failed. Trying to reset DB...')
+    //   execSync(`npx prisma migrate reset --force`, { stdio: 'inherit' })
+    // }
   } else {
     console.log('✅ No schema change. Skip migration.')
   }

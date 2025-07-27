@@ -21,20 +21,16 @@ export default function ListNavDesktop() {
           <div className='flex items-center'>
             {/* Navigation menu */}
             <NavigationMenu viewport={false} className='max-md:hidden'>
-              <NavigationMenuList className='gap-0'>
+              <NavigationMenuList className='gap-2'>
                 {navigationLinks.map((link, index) => {
-                  const isLastItem = index === navigationLinks.length - 1
                   return (
                     <NavigationMenuItem key={index}>
                       {link.submenu ? (
                         <>
                           <div className='flex items-center'>
-                            <NavigationMenuTrigger className='text-black text-lg bg-white hover:text-white  hover:bg-primary-color px-2 py-1.5 font-medium *:[svg]:-me-0.5 *:[svg]:size-3.5 rounded-2xl'>
+                            <NavigationMenuTrigger className='text-black text-lg bg-white  hover:text-white  hover:bg-primary-color px-2 py-1.5 font-medium *:[svg]:-me-0.5 *:[svg]:size-3.5 rounded-lg'>
                               {link.label}
                             </NavigationMenuTrigger>
-                            {!isLastItem && (
-                              <div className='bg-white px-2 py-1' />
-                            )}
                           </div>
                           <NavigationMenuContent className='data-[motion=from-end]:slide-in-from-right-16! data-[motion=from-start]:slide-in-from-left-16! data-[motion=to-end]:slide-out-to-right-16! data-[motion=to-start]:slide-out-to-left-16! z-50 p-1'>
                             <ul
@@ -61,13 +57,10 @@ export default function ListNavDesktop() {
                         <div className='flex items-center'>
                           <NavigationMenuLink
                             href={link.href}
-                            className='text-black rounded-2xl text-lg bg-white hover:text-white py-1.5 font-medium hover:bg-primary-color'
+                            className='text-black rounded-lg text-lg bg-white hover:text-white py-1.5 font-medium hover:bg-primary-color'
                           >
                             {link.label}
                           </NavigationMenuLink>
-                          {!isLastItem && (
-                            <div className='bg-white px-2 py-1' />
-                          )}
                         </div>
                       )}
                     </NavigationMenuItem>
