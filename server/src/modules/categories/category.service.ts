@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/lib'
+import { prisma, slugify } from '@/utils/lib'
 import { CreateCategoryInput, UpdateCategoryInput } from './category.schema'
 import { AppError } from '@/utils/errors'
 
@@ -8,9 +8,15 @@ export class CategoryService {
     const existing = await prisma.category.findUnique({
       where: { name: data.name },
     })
+
+    const payload = {
+      ...data,
+      slug: slugify(data.name),
+    }
+
     if (existing) throw new AppError('This category already exists')
 
-    return prisma.category.create({ data })
+    return prisma.category.create({ data: payload })
   }
 
   static async update(id: number, data: UpdateCategoryInput) {

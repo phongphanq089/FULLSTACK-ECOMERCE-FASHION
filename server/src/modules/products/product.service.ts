@@ -6,6 +6,7 @@ import {
 } from './product.schema'
 import { Prisma } from '@prisma/client'
 import { AppError } from '@/utils/errors'
+import slugify from 'slugify'
 
 export class ProductService {
   static async addNewProduct(resBody: CreateProductInput) {
@@ -14,7 +15,6 @@ export class ProductService {
       description,
       imageUrl,
       weight,
-
       categoryId,
       brandId,
       sizeIds,
@@ -26,6 +26,7 @@ export class ProductService {
       description,
       imageUrl,
       weight: weight ?? null,
+      slug: slugify(name),
     }
 
     if (categoryId) {
@@ -62,8 +63,51 @@ export class ProductService {
       }
       data.colors = { connect: colorIds.map((id) => ({ id })) }
     }
+    if (resBody.variants?.length) {
+      data.variants = {
+        create: resBody.variants.map((variant) => ({
+          sku: variant.sku,
+          price: variant.price,
+          originalPrice: variant.originalPrice ?? null,
+          discountPercent: variant.discountPercent ?? null,
+          costPrice: variant.costPrice ?? null,
+          profit: variant.profit ?? null,
+          profitMargin: variant.profitMargin ?? null,
+          stock: variant.stock,
+          color: variant.colorId
+            ? { connect: { id: variant.colorId } }
+            : undefined,
+          size: variant.sizeId
+            ? { connect: { id: variant.sizeId } }
+            : undefined,
+        })),
+      }
+    }
+
+    if (resBody.collectionIds?.length) {
+      const validCollections = await prisma.collection.findMany({
+        where: { id: { in: resBody.collectionIds } },
+      })
+      if (validCollections.length !== resBody.collectionIds.length) {
+        throw new AppError('One or more collectionIds are invalid')
+      }
+      data.collections = {
+        connect: resBody.collectionIds.map((id) => ({ id })),
+      }
+    }
 
     const product = await prisma.product.create({ data })
+
+    if (resBody.infoSections?.length) {
+      await prisma.productInfoSection.createMany({
+        data: resBody.infoSections.map((section) => ({
+          productId: product.id,
+          title: section.title,
+          content: section.content,
+          sortOrder: section.sortOrder ?? 0,
+        })),
+      })
+    }
 
     return product
   }
@@ -83,8 +127,10 @@ export class ProductService {
     const data: Prisma.ProductCreateInput = {
       name,
       description,
+
       imageUrl,
       weight: weight ?? null,
+      slug: slugify(name),
     }
 
     if (categoryId) {
@@ -113,6 +159,61 @@ export class ProductService {
       data,
     })
 
+    if (resBody.variants) {
+      await prisma.productVariant.deleteMany({
+        where: { productId: Number(id) },
+      })
+
+      await prisma.product.update({
+        where: { id: Number(id) },
+        data: {
+          variants: {
+            create: resBody.variants.map((variant) => ({
+              sku: variant.sku,
+              price: variant.price,
+              originalPrice: variant.originalPrice ?? null,
+              discountPercent: variant.discountPercent ?? null,
+              costPrice: variant.costPrice ?? null,
+              profit: variant.profit ?? null,
+              profitMargin: variant.profitMargin ?? null,
+              stock: variant.stock,
+              color: variant.colorId
+                ? { connect: { id: variant.colorId } }
+                : undefined,
+              size: variant.sizeId
+                ? { connect: { id: variant.sizeId } }
+                : undefined,
+            })),
+          },
+        },
+      })
+    }
+
+    if (resBody.infoSections) {
+      await prisma.productInfoSection.deleteMany({
+        where: { productId: Number(id) },
+      })
+      await prisma.productInfoSection.createMany({
+        data: resBody.infoSections.map((section) => ({
+          productId: Number(id),
+          title: section.title,
+          content: section.content,
+          sortOrder: section.sortOrder ?? 0,
+        })),
+      })
+    }
+
+    if (resBody.collectionIds) {
+      await prisma.product.update({
+        where: { id: Number(id) },
+        data: {
+          collections: {
+            set: [], // clear all first
+            connect: resBody.collectionIds.map((id) => ({ id })),
+          },
+        },
+      })
+    }
     return product
   }
   static async getFilterOptions() {

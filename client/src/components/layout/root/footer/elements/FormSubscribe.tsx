@@ -1,8 +1,9 @@
 'use client'
 import React, { useCallback, useState } from 'react'
 import AnimatedPathText from '~/components/ui/AnimatedPathText'
-import { Button } from '~/components/ui/button'
+
 import { AnimatePresence, motion } from 'motion/react'
+import Button from '~/components/ui/button'
 
 const FormSubscribe = () => {
   const rectPath =
