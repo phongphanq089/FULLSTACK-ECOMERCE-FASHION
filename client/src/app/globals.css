@@ -207,4 +207,10 @@
       background: #ff3c00;
     }
   }
+  .jodit-react-container {
+    color: black;
+  }
+  .jodit-add-new-line {
+    display: none !important;
+  }
 }

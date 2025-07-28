@@ -1,6 +1,5 @@
 import {
   IconBellDollar,
-  IconBorderAll,
   IconBrandAdobe,
   IconBrowserCheck,
   IconCategory,
@@ -67,8 +66,17 @@ export const sidebarData: SidebarData = {
         },
         {
           title: 'Colections',
-          url: '/colections',
           icon: IconCategory,
+          items: [
+            {
+              title: 'Colection List',
+              url: '/admin/collection',
+            },
+            {
+              title: 'Create Colection',
+              url: '/admin/collection/create',
+            },
+          ],
         },
         {
           title: 'Categories',
@@ -90,25 +98,11 @@ export const sidebarData: SidebarData = {
           items: [
             {
               title: 'Brands List',
-              url: '/admin/brands',
+              url: '/admin/brand',
             },
             {
               title: 'Create Brands',
-              url: '/admin/brands/create',
-            },
-          ],
-        },
-        {
-          title: 'Orders',
-          icon: IconBorderAll,
-          items: [
-            {
-              title: 'Brands List',
-              url: '/admin/brands',
-            },
-            {
-              title: 'Create Brands',
-              url: '/admin/brands/create',
+              url: '/admin/brand/create',
             },
           ],
         },

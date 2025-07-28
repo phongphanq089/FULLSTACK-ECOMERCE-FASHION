@@ -1,6 +1,7 @@
 import React from 'react'
 import { AppSidebar } from '~/components/layout/admin/AppSidebar'
 import { SidebarProvider } from '~/components/ui/sidebar'
+import { SearchProvider } from '~/context/search-context'
 import { ThemeProvider } from '~/providers/ThemeProvider'
 
 const LayoutRoot = ({
@@ -16,10 +17,12 @@ const LayoutRoot = ({
         enableSystem
         disableTransitionOnChange
       >
-        <SidebarProvider>
-          <AppSidebar />
-          <div className='p-2 w-full min-h-screen'>{children}</div>
-        </SidebarProvider>
+        <SearchProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <div className='p-2 w-full min-h-screen'>{children}</div>
+          </SidebarProvider>
+        </SearchProvider>
       </ThemeProvider>
     </div>
   )

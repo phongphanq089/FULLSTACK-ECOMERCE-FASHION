@@ -5,17 +5,20 @@ import React, { useId } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+
+// import { ControllerRenderProps } from 'react-hook-form'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/ui/tooltip'
-
+// import { ProductSchemaType } from '~/validate/product/schema'
 const InventoryForm = () => {
   const id = useId()
   return (
-    <Card className='mt-10'>
+    <Card className='my-10'>
       <CardHeader className='border-b'>
         <CardTitle>Inventory</CardTitle>
       </CardHeader>
