@@ -113,7 +113,7 @@ model Product {
   categoryId  Int?
   infoSections ProductInfoSection[]
   collections Collection[] @relation("ProductToCollection")
-  category    Category?        @relation(fields: [categoryId], references: [id])
+  categories  Category[] @relation("CategoryToProduct")
   brandId     Int?
   brand       Brand?           @relation(fields: [brandId], references: [id])
   variants    ProductVariant[]
@@ -233,7 +233,7 @@ model Category {
   collections Collection[] @relation("CategoryInCollection")
   name     String    @unique
   isActive Boolean   @default(true)
-  products Product[]
+  products Product[] @relation("CategoryToProduct")
 }
 
 model Color {

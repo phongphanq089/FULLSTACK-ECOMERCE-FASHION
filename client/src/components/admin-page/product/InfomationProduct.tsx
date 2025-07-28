@@ -2,6 +2,7 @@
 
 import { IconInfoCircleFilled, IconPlus } from '@tabler/icons-react'
 import React, { useRef, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 import QuillEditor from '~/components/shared/QuillEditor'
 import Button from '~/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
@@ -22,8 +23,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/ui/tooltip'
+import { CreateProductSchemaType } from '~/validate/product/schema'
 
 const InfomationProduct = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<CreateProductSchemaType>()
+
   return (
     <Card className='mt-10'>
       <CardHeader className='border-b'>
@@ -35,7 +42,14 @@ const InfomationProduct = () => {
           <div className='flex flex-col md:grid grid-cols-2 gap-3 mb-5'>
             <div className='grid gap-2'>
               <Label>Name</Label>
-              <Input type='text' placeholder='Name Product...' />
+              <Input
+                {...register('name')}
+                type='text'
+                placeholder='Name Product...'
+              />
+              {errors.name && (
+                <p className='text-red-500'>{errors.name.message}</p>
+              )}
             </div>
             <div className='grid gap-2'>
               <div className='flex items-center gap-2'>
@@ -56,7 +70,11 @@ const InfomationProduct = () => {
                   </Tooltip>
                 </TooltipProvider>
               </div>
-              <Input type='text' placeholder='VD : NEW PRODUCT' />
+              <Input
+                {...register('smallStrip')}
+                type='text'
+                placeholder='VD : NEW PRODUCT'
+              />
             </div>
           </div>
 

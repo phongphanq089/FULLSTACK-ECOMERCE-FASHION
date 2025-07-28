@@ -9,7 +9,7 @@ const cn = (...classes: (string | boolean | undefined | null)[]): string => {
 // --- Button Variants Definition ---
 const buttonVariants = cva(
   // Base styles for all buttons.
-  'font-sans whitespace-nowrap transition-all outline-none cursor-pointer duration-200 font-medium flex items-center justify-center rounded-md disabled:cursor-not-allowed disabled:opacity-60',
+  'font-sans whitespace-nowrap transition-all outline-none cursor-pointer duration-200 font-medium flex items-center justify-center rounded-md disabled:cursor-not-allowed disabled:opacity-60 max-sm:py-1',
   {
     variants: {
       variant: {
