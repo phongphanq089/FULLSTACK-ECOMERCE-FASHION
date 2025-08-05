@@ -1,89 +1,25 @@
-
 generator client {
   provider = "prisma-client-js"
-
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
-// ========= onDelete: Cascade =================//
-// Khi bản ghi cha bị xóa, thì tự động xóa tất cả bản ghi con liên quan.
-// user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-//  userId: là foreign key
-//  references: [id]: trỏ đến User.id
-//  onDelete: Cascade: nếu User bị xóa → Prisma sẽ tự xóa tất cả bản ghi có userId tương ứng
-// ===============@id: định nghĩa là khóa chính. ===================//
-// @default(autoincrement()): mỗi khi tạo bản ghi mới, Prisma tự tăng giá trị id lên 1.
-// ========== Các giá trị mặc định thường gặp: ========== //
-// autoincr@default(autoincrement()) 	Tự động tăng số nguyên
-// @default(now())  	Lấy thời gian hiện tại (DateTime)
-// @default(cuid())  Chuỗi ID duy nhất, ngắn hơn uuid
-// @default(uuid())  UUID ngẫu nhiên
-// @default(true/false)   Dùng với boolean
-// ============ @unique Tương đương với UNIQUE trong SQL: đảm bảo giá trị không trùng lặp. Ví dụ: email String @unique  ===================//
-// ======= @relation(...) ======= //
-// Dùng để định nghĩa mối quan hệ giữa các bảng (1-1, 1-nhiều, nhiều-nhiều). Ví dụ:
-// user User @relation(fields: [userId], references: [id]) ===> 🔍 Nghĩa là userId là khóa ngoại (foreign key) liên kết tới User.id.
-// =======  @relation("ProductToSize") ============= //
-//  "ProductToSize" là tên tự đặt cho mối quan hệ nhiều-nhiều (many-to-many) giữa Product và Size. Nó dùng để gán tên rõ ràng cho quan hệ, giúp Prisma biết chiều nào với chiều nào trong quan hệ.
-// Bạn có thể không cần tự tạo bảng trung gian thủ công, Prisma sẽ tự sinh nếu bạn dùng:  sizes Size[] @relation("ProductToSize") products Product[] @relation("ProductToSize")
-
-// model Product {
-//   id    Int     @id @default(autoincrement())
-//   name  String
-//   sizes Size[]  @relation("ProductToSize")
-// }
-// model Size {
-//   id       Int       @id @default(autoincrement())
-//   name     String
-//   products Product[] @relation("ProductToSize")
-// }
-//  ==== Prisma sẽ ngầm tạo ra một bảng trung gian ====
-// ProductToSize (
-//   productId INT,
-//   sizeId INT,
-//   PRIMARY KEY (productId, sizeId),
-//   FOREIGN KEY (productId) REFERENCES Product(id),
-//   FOREIGN KEY (sizeId) REFERENCES Size(id)
-// )
-
-// ========== @@unique([field1, field2]) ============//
-// Tạo unique index nhiều cột (composite unique key)  ===> vd: @@unique([cartId, productVariantId])
-// ======= @updatedAt ======= //
-// Dùng cho kiểu DateTime, Prisma sẽ tự động cập nhật thời gian mới nhất mỗi khi record thay đổi:  updatedAt DateTime @updatedAt
-// ======= Enum ============== //
-// Khai báo tập giá trị ràng buộc, như OrderStatus:
-// enum OrderStatus {
-//   PENDING
-//   CONFIRMED
-//   ...
-// }
-
-// Kiểu dữ liệu Prisma
-//  Prisma  ====  SQL tương ứng  ===   Ý nghĩa
-//    Int           INTEGER              	Số nguyên
-//    String      	VARCHAR/TEXT        	Chuỗi
-//   Boolean	      BOOLEAN	              Đúng/Sai
-//   DateTime	      TIMESTAMP	            Ngày giờ
-//   Float        	FLOAT/DOUBLE	        Số thực
-//  Json	          JSON	                Dữ liệu dạng
-
 model User {
-  id            Int             @id @default(autoincrement())
-  email         String          @unique
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
   password      String
   name          String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  cart          Cart?
   orders        Order[]
   refreshTokens RefreshToken[]
-  cart          Cart?
-  userRoles     UserRole[]
   userAddresses UserAddress[]
+  userRoles     UserRole[]
 
   @@index([email])
 }
@@ -92,35 +28,35 @@ model RefreshToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique
   userId    Int
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
-// ====== product ====== //
+
 model Product {
-  id          Int              @id @default(autoincrement())
-  slug        String     @unique
-  name        String
-  smallStrip  String
-  description String
-  imageUrl    String
-  weight      Float?
-  isActive    Boolean          @default(true)
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  categoryId  Int?
-  infoSections ProductInfoSection[]
-  collections Collection[] @relation("ProductToCollection")
-  categories  Category[] @relation("CategoryToProduct")
-  brandId     Int?
-  brand       Brand?           @relation(fields: [brandId], references: [id])
-  variants    ProductVariant[]
-  discounts   Discount[]
-  sizes       Size[]           @relation("ProductToSize")
-  colors      Color[]          @relation("ProductToColor")
+  id           Int                  @id @default(autoincrement())
+  slug         String               @unique
+  name         String
+  description  String
+  imageUrl     String
+  weight       Float?
+  isActive     Boolean              @default(true)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  categoryId   Int?
+  brandId      Int?
+  smallStrip   String?
+  brand        Brand?               @relation(fields: [brandId], references: [id])
+  category     Category?            @relation(fields: [categoryId], references: [id])
   ProductImage ProductImage[]
+  infoSections ProductInfoSection[]
+  variants     ProductVariant[]
+  discounts    Discount[]           @relation("DiscountToProduct")
+  collections  Collection[]         @relation("ProductToCollection")
+  colors       Color[]              @relation("ProductToColor")
+  sizes        Size[]               @relation("ProductToSize")
 
   @@index([categoryId])
   @@index([brandId])
@@ -129,36 +65,36 @@ model Product {
 }
 
 model ProductInfoSection {
-  id        Int      @id @default(autoincrement())
-  title     String   // Ví dụ: "Shipping & Returns", "Size Guide"
-  content   String   // Nội dung chi tiết
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String
   productId Int
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  sortOrder Int      @default(0) // Dễ sắp xếp theo thứ tự hiển thị
+  sortOrder Int     @default(0)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
 }
 
 model ProductVariant {
-  id         Int         @id @default(autoincrement())
-  sku        String      @unique
-  price            Float       // Giá bán cuối
-  originalPrice    Float?      // Giá gốc (niêm yết)
-  discountPercent  Float?      // % giảm giá
-  costPrice        Float?      // Giá vốn
-  profit           Float?      // Lợi nhuận (tính toán)
-  profitMargin     Float?      // Biên lợi nhuận %
-  stock      Int
-  isActive   Boolean     @default(true)
-  productId  Int
-  product    Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
-  colorId    Int?
-  color      Color?      @relation(fields: [colorId], references: [id])
-  sizeId     Int?
-  size       Size?       @relation(fields: [sizeId], references: [id])
-  cartItems  CartItem[]
-  orderItems OrderItem[]
-  stockMovements StockMovement[]
+  id              Int             @id @default(autoincrement())
+  sku             String          @unique
+  price           Float
+  stock           Int
+  isActive        Boolean         @default(true)
+  productId       Int
+  colorId         Int?
+  sizeId          Int?
+  costPrice       Float?
+  discountPercent Float?
+  originalPrice   Float?
+  profit          Float?
+  profitMargin    Float?
+  cartItems       CartItem[]
+  orderItems      OrderItem[]
+  color           Color?          @relation(fields: [colorId], references: [id])
+  product         Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size            Size?           @relation(fields: [sizeId], references: [id])
+  stockMovements  StockMovement[]
 
   @@index([productId])
   @@index([colorId, sizeId])
@@ -168,20 +104,19 @@ model ProductVariant {
 model Cart {
   id        Int        @id @default(autoincrement())
   userId    Int        @unique
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cartItems CartItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cartItems CartItem[]
 }
-
 
 model CartItem {
   id               Int            @id @default(autoincrement())
   quantity         Int
   price            Float
   cartId           Int
-  cart             Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
   productVariantId Int
+  cart             Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
   productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
 
   @@unique([cartId, productVariantId])
@@ -192,21 +127,10 @@ model OrderItem {
   quantity         Int
   price            Float
   orderId          Int
-  order            Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productVariantId Int
+  order            Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
 }
-
-enum OrderStatus {
-  PENDING
-  CONFIRMED
-  PROCESSING
-  SHIPPED
-  DELIVERED
-  CANCELLED
-  REFUNDED
-}
-
 
 model Brand {
   id       Int       @id @default(autoincrement())
@@ -216,39 +140,38 @@ model Brand {
 }
 
 model Collection {
-  id          Int        @id @default(autoincrement())
-  name        String
-  slug        String     @unique
-  isActive    Boolean    @default(true)
-  products    Product[]  @relation("ProductToCollection")
-  categories Category[]  @relation("CategoryInCollection")
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id         Int        @id @default(autoincrement())
+  name       String
+  slug       String     @unique
+  isActive   Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  categories Category[] @relation("CategoryInCollection")
+  products   Product[]  @relation("ProductToCollection")
 }
 
-
 model Category {
-  id       Int       @id @default(autoincrement())
-  slug     String   @unique
+  id          Int          @id @default(autoincrement())
+  slug        String       @unique
+  name        String       @unique
+  isActive    Boolean      @default(true)
+  products    Product[]
   collections Collection[] @relation("CategoryInCollection")
-  name     String    @unique
-  isActive Boolean   @default(true)
-  products Product[] @relation("CategoryToProduct")
 }
 
 model Color {
   id              Int              @id @default(autoincrement())
   name            String           @unique
   hexCode         String?
-  products        Product[]        @relation("ProductToColor")
   productVariants ProductVariant[]
+  products        Product[]        @relation("ProductToColor")
 }
 
 model Size {
   id              Int              @id @default(autoincrement())
   name            String           @unique
-  products        Product[]        @relation("ProductToSize")
   productVariants ProductVariant[]
+  products        Product[]        @relation("ProductToSize")
 }
 
 model Discount {
@@ -262,37 +185,32 @@ model Discount {
   isActive     Boolean      @default(true)
   maxUses      Int?
   currentUses  Int          @default(0)
-  products     Product[]
   orders       Order[]
+  products     Product[]    @relation("DiscountToProduct")
 
   @@index([code])
   @@index([isActive, startDate, endDate])
 }
 
-enum DiscountType {
-  PERCENTAGE
-  FIXED
-}
-
 model Order {
-  id              Int         @id @default(autoincrement())
-  orderNumber     String      @unique @default(cuid())
-  status          OrderStatus @default(PENDING)
-  shippingAddress String?
-  phoneNumber     String?
-  customerName    String?
-  totalPrice      Float
-  shippingFee     Float       @default(0)
-  discountAmount  Float       @default(0)
-  discountId      Int?
-  discount        Discount?   @relation(fields: [discountId], references: [id])
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  userId          Int
-  user            User        @relation(fields: [userId], references: [id])
-  orderItems      OrderItem[]
-  shippingMethodId  Int?
-  shippingMethod    ShippingMethod? @relation(fields: [shippingMethodId], references: [id])
+  id               Int             @id @default(autoincrement())
+  orderNumber      String          @unique @default(cuid())
+  status           OrderStatus     @default(PENDING)
+  shippingAddress  String?
+  phoneNumber      String?
+  customerName     String?
+  totalPrice       Float
+  shippingFee      Float           @default(0)
+  discountAmount   Float           @default(0)
+  discountId       Int?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  userId           Int
+  shippingMethodId Int?
+  discount         Discount?       @relation(fields: [discountId], references: [id])
+  shippingMethod   ShippingMethod? @relation(fields: [shippingMethodId], references: [id])
+  user             User            @relation(fields: [userId], references: [id])
+  orderItems       OrderItem[]
 
   @@index([userId])
   @@index([status])
@@ -303,7 +221,6 @@ model Order {
 model UserAddress {
   id         Int      @id @default(autoincrement())
   userId     Int
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   fullName   String
   phone      String
   address    String
@@ -312,64 +229,60 @@ model UserAddress {
   postalCode String
   isDefault  Boolean  @default(false)
   createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ProductImage {
-  id         Int     @id @default(autoincrement())
-  productId  Int
-  product    Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  imageUrl   String
-  altText    String?
-  isMain     Boolean @default(false)
+  id        Int     @id @default(autoincrement())
+  productId Int
+  imageUrl  String
+  altText   String?
+  isMain    Boolean @default(false)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model ShippingMethod {
-  id         Int      @id @default(autoincrement())
-  name       String   @unique
-  description String?
-  fee        Float
+  id                    Int     @id @default(autoincrement())
+  name                  String  @unique
+  description           String?
+  fee                   Float
   estimatedDeliveryDays Int
-  isActive   Boolean  @default(true)
-  orders     Order[]
+  isActive              Boolean @default(true)
+  orders                Order[]
 }
 
 model Warehouse {
-  id      Int     @id @default(autoincrement())
-  name    String
-  location String
+  id             Int             @id @default(autoincrement())
+  name           String
+  location       String
   stockMovements StockMovement[]
 }
 
 model StockMovement {
-  id              Int             @id @default(autoincrement())
+  id               Int            @id @default(autoincrement())
   productVariantId Int
+  warehouseId      Int
+  quantity         Int
+  type             MovementType
+  createdAt        DateTime       @default(now())
   productVariant   ProductVariant @relation(fields: [productVariantId], references: [id])
-  warehouseId     Int
-  warehouse       Warehouse       @relation(fields: [warehouseId], references: [id])
-  quantity        Int
-  type            MovementType    // IN or OUT
-  createdAt       DateTime        @default(now())
-}
-
-enum MovementType {
-  IN
-  OUT
+  warehouse        Warehouse      @relation(fields: [warehouseId], references: [id])
 }
 
 model Role {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
   description String?
   priority    Int
-  isActive    Boolean       @default(true)
+  isActive    Boolean          @default(true)
   metadata    Json?
-  users       UserRole[]
   permissions RolePermission[]
+  users       UserRole[]
 }
 
 model Permission {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
   description String?
   resource    String
   action      String
@@ -378,21 +291,69 @@ model Permission {
 }
 
 model RolePermission {
-  id            Int         @id @default(autoincrement())
-  roleId        Int
-  permissionId  Int
-  role          Role        @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permission    Permission  @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  id           Int        @id @default(autoincrement())
+  roleId       Int
+  permissionId Int
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@unique([roleId, permissionId])
 }
 
 model UserRole {
-  id      Int   @id @default(autoincrement())
-  userId  Int
-  roleId  Int
-  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role    Role  @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  id     Int  @id @default(autoincrement())
+  userId Int
+  roleId Int
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, roleId])
+}
+
+model MediaFolder {
+  id Int @id @default(autoincrement())
+  name String
+  slug String @unique
+  parentId Int?   // hỗ trợ nếu muốn tạo ra folder con
+  parent    MediaFolder? @relation("FolderParent", fields: [parentId], references: [id])
+  children  MediaFolder[] @relation("FolderParent")
+  medias Media[]
+  createAt DateTime @default(now())
+}
+
+model Media {
+  id Int @id @default(autoincrement())
+  url String
+  altText String?
+  type MediaType
+  folderId Int?
+  folder MediaFolder? @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  createAt DateTime @default(now())
+  updateBy Int?
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  DOCUMENT
+  OTHER
+}
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+}
+
+enum MovementType {
+  IN
+  OUT
 }

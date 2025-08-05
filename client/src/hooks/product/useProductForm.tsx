@@ -17,7 +17,7 @@ export function useProductForm(
       imageUrl: 'https://cdn.myhost.com/image-123.jpg',
       weight: undefined,
 
-      categoryId: undefined,
+      categoryId: [],
       brandId: undefined,
       sizeIds: [],
       colorIds: [],

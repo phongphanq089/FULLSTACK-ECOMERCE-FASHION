@@ -6,7 +6,7 @@ export const createProductSchema = z.object({
   description: z.string().optional(),
   imageUrl: z.string().url('Invalid image URL (must be a valid URL)'),
   weight: z.number().nonnegative('Weight cannot be negative').optional(),
-  categoryId: z.number().int().min(1).optional(),
+  categoryId: z.array(z.number().int().gt(0)).optional(),
   brandId: z.number().int().min(1).optional(),
 
   sizeIds: z.array(z.number().int().gt(0)).optional(),
@@ -33,7 +33,7 @@ export const createProductSchema = z.object({
         costPrice: z.number().nonnegative().optional(),
         profit: z.number().optional(),
         profitMargin: z.number().optional(),
-        stock: z.number().int().nonnegative(),
+        stock: z.number().optional(),
         colorId: z.number().int().optional(),
         sizeId: z.number().int().optional(),
       })

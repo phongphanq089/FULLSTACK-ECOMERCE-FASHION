@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import React, { useState } from 'react'
@@ -12,12 +13,14 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
+import { CreateProductSchemaType } from '~/validate/product/schema'
+import { Controller, useFormContext } from 'react-hook-form'
 
 const initialCollections = [
-  { name: 'All', checked: false, disabled: true },
-  { name: 'Womens New Arrivals', checked: false },
-  { name: 'Mens Most Wanted', checked: false },
-  { name: 'Womens Matching Sets', checked: false },
+  { id: '1', name: 'All', checked: false, disabled: true },
+  { id: '2', name: 'Womens New Arrivals', checked: false },
+  { id: '3', name: 'Mens Most Wanted', checked: false },
+  { id: '4', name: 'Womens Matching Sets', checked: false },
 ]
 
 const FormCollection = () => {
@@ -25,18 +28,60 @@ const FormCollection = () => {
   const [showInput, setShowInput] = useState(false)
   const [newCollection, setNewCollection] = useState('')
 
-  const toggleCollection = (index: number) => {
-    if (collections[index].disabled) return
-    const updated = [...collections]
-    updated[index].checked = !updated[index].checked
-    setCollections(updated)
+  // Sử dụng useFormContext để truy cập form context
+  const {
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<CreateProductSchemaType>()
+
+  const selectedCollectionIds = watch('collectionIds') || [1]
+
+  const toggleCollection = (collectionId: string) => {
+    const parsedId = parseInt(collectionId)
+
+    if (isNaN(parsedId)) {
+      console.error('Invalid collection Id', collectionId)
+
+      return
+    }
+
+    if (parsedId === 1) return
+
+    const currentIds = selectedCollectionIds
+
+    let newIds: number[]
+
+    if (currentIds.includes(parsedId)) {
+      // Loại bỏ ID nếu đã được chọn, nhưng giữ ID 1 (All)
+      newIds = currentIds.filter((id) => id !== parsedId)
+    } else {
+      newIds = [...currentIds, parsedId]
+    }
+
+    // Đảm bảo ID 1 (All) luôn nằm trong mảng
+    if (!newIds.includes(1)) {
+      newIds.push(1)
+    }
+
+    setValue('collectionIds', newIds, { shouldValidate: true })
+
+    setCollections((prev) => {
+      return prev.map((col) =>
+        col.id === collectionId && !col.disabled
+          ? { ...col, checked: !col.checked }
+          : col
+      )
+    })
   }
 
   const handleAdd = () => {
     if (!newCollection.trim()) return
+    const newId = `${collections.length + 1}` // Tạo ID mới (có thể thay bằng logic khác)
     setCollections([
       ...collections,
-      { name: newCollection.trim(), checked: false },
+      { id: newId, name: newCollection.trim(), checked: false },
     ])
     setNewCollection('')
     setShowInput(false)
@@ -65,18 +110,26 @@ const FormCollection = () => {
               dark:has-[[aria-checked=true]]:bg-orange-950
             '
           >
-            <Checkbox
-              id={col.name}
-              checked={col.checked}
-              disabled={col.disabled}
-              onCheckedChange={() => toggleCollection(i)}
-              className='
+            <Controller
+              name='collectionIds'
+              control={control}
+              render={({ field }) => {
+                return (
+                  <Checkbox
+                    id={col.name}
+                    checked={field.value?.includes(parseInt(col.id))}
+                    disabled={col.disabled}
+                    onCheckedChange={() => toggleCollection(col.id)}
+                    className='
                 data-[state=checked]:border-orange-500
                 data-[state=checked]:bg-orange-500
                 data-[state=checked]:text-white
                 dark:data-[state=checked]:border-orange-600
                 dark:data-[state=checked]:bg-orange-600
               '
+                  />
+                )
+              }}
             />
             <div className='grid gap-1.5 font-normal'>
               <p className='text-sm leading-none font-medium'>{col.name}</p>

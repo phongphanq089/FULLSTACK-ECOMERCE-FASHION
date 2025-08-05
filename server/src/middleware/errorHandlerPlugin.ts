@@ -18,7 +18,7 @@ export const zodErrorHandlerPlugin = fp(async (fastify: FastifyInstance) => {
           path: e.path.join('.'),
           message: e.message,
         }))
-        // logger.warning('Validation error:', { errors, url: request.url })
+        logger.error('Validation error:', { errors, url: request.url })
         return reply.status(400).send({
           success: false,
           message: 'Validation failed',
@@ -35,7 +35,7 @@ export const zodErrorHandlerPlugin = fp(async (fastify: FastifyInstance) => {
       }
 
       // fallback khi không xác định rõ lỗi là gì nó sẽ mặt định vào trong này
-      // logger.error('Unexpected error:', error)
+      logger.error('Unexpected error:', error)
       console.error('🔥🔥🔥 Lỗi chưa xác định:', error)
       return reply.status(500).send({
         success: false,

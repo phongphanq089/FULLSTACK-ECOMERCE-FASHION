@@ -15,7 +15,7 @@
     "@editorjs/paragraph": "^2.11.7",
     "@editorjs/table": "^2.4.5",
     "@floating-ui/react": "^0.27.13",
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "^5.2.1",
     "@left4code/svg-renderer": "^1.0.4",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -51,12 +51,12 @@
     "react-aria-components": "^1.11.0",
     "react-colorful": "^5.6.1",
     "react-dom": "^19.0.0",
-    "react-hook-form": "^7.61.1",
+    "react-hook-form": "^7.62.0",
     "react-hotkeys-hook": "^5.1.0",
     "sharp": "^0.34.2",
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.0",
-    "zod": "^4.0.8",
+    "zod": "^4.0.14",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

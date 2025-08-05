@@ -38,6 +38,7 @@ const InfomationProduct = () => {
     formState: { errors },
   } = useFormContext<CreateProductSchemaType>()
 
+  console.log(errors, '===>')
   return (
     <Card className='mt-10'>
       <CardHeader className='border-b'>
